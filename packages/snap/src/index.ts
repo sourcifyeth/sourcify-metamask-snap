@@ -1,106 +1,117 @@
-import { decode } from '@metamask/abi-utils';
+import { decode as cborDecode } from 'cbor-x';
+import bs58 from 'bs58';
 import { OnTransactionHandler } from '@metamask/snap-types';
-import { isObject, hasProperty, remove0x, add0x, Json, bytesToHex } from '@metamask/utils';
+import { decode } from '@metamask/abi-utils';
+import {
+  evaluate,
+  getChecksumAddress,
+  findSelectorItemFromSignatureHash,
+  normalizeAbiValue,
+  VerifiedStatus,
+} from './utils';
 
-// The API endpoint to get a list of functions by 4 byte signature.
-const API_ENDPOINT =
-  'https://www.4byte.directory/api/v1/signatures/?hex_signature=';
-
-/* eslint-disable camelcase */
-type FourByteSignature = {
-  id: number;
-  created_at: string;
-  text_signature: string;
-  hex_signature: string;
-  bytes_signature: string;
-};
 /* eslint-enable camelcase */
-
 export const onTransaction: OnTransactionHandler = async ({ transaction }) => {
-  const insights: { type: string; params?: Json } = {
-    type: 'Unknown Transaction',
+  const insights: { notice: string; parameters: any[]; verified: string } = {
+    verified: '',
+    notice: '',
+    parameters: [],
+  };
+  const tx = transaction as {
+    data: string;
+    to: string;
   };
 
-  if (
-    !isObject(transaction) ||
-    !hasProperty(transaction, 'data') ||
-    typeof transaction.data !== 'string'
-  ) {
-    console.log('Unknown transaction type.');
-    return { insights };
-  }
+  const chainId = wallet.networkVersion;
 
-  // Fetch data from 4byte.registry
-
-  const transactionData = remove0x(transaction.data);
-
-  const fourBytes = transactionData.slice(0, 8);
-  const response = await fetch(`${API_ENDPOINT}${add0x(fourBytes)}`, {
-    method: 'get',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  const bytecodeRaw = await wallet?.request({
+    method: 'eth_getCode',
+    params: [tx.to],
   });
 
-  if (!response.ok) {
-    throw new Error('Unable to fetch function signature data.');
-  }
-
-  const { results } = (await response.json()) as {
-    results: FourByteSignature[];
-  };
-
-  // Extract function text signature from 4byte results
-
-  const [ matchingFunction ] = results
-    .sort((a, b) => a.created_at.localeCompare(b.created_at))
-    .map((value) => value.text_signature);
-
-  if (!matchingFunction) {
-    console.log('No matching function signatures found.');
+  if (bytecodeRaw === null || bytecodeRaw === undefined) {
     return { insights };
   }
 
-  // "functionName(type1,type2,...)"
-  insights.type = matchingFunction;
+  const bytecode = bytecodeRaw.toString();
 
-  // Decode transaction parameters
-
-  const parameterTypes = matchingFunction
-    .slice(matchingFunction.indexOf('(') + 1, matchingFunction.indexOf(')'))
-    .split(',');
-
-  const decodedParameters = decode(
-    parameterTypes,
-    add0x(transactionData.slice(8))
+  const ipfsHashLength = parseInt(`${bytecode.slice(-4)}`, 16);
+  const cborEncoded = bytecode.substring(
+    bytecode.length - 4 - ipfsHashLength * 2,
+    bytecode.length - 4,
   );
 
-  insights.params = decodedParameters.map(normalizeAbiValue);
+  const contractMetadata = cborDecode(Buffer.from(cborEncoded, 'hex'));
 
-  // Return completed insights
+  let contractMetadataJSON: any;
+  try {
+    const req = await fetch(
+      `https://ipfs.io/ipfs/${bs58.encode(contractMetadata.ipfs)}`,
+    );
+    contractMetadataJSON = await req.json();
+  } catch (e) {
+    console.log(e);
+    return { insights };
+  }
+
+  const metadata = contractMetadataJSON;
+
+  const functionSignatureHash = tx.data.slice(2, 10);
+
+  const selector = await findSelectorItemFromSignatureHash(
+    `0x${functionSignatureHash}`,
+    metadata.output.abi,
+  );
+
+  const notice = await evaluate(
+    metadata.output.userdoc.methods[selector || ''].notice,
+    metadata.output.abi,
+    tx,
+  );
+
+  insights.notice = notice;
+
+  const parameterTypes = selector
+    .slice(selector.indexOf('(') + 1, selector.indexOf(')'))
+    .split(',');
+
+  const decodedParameters = decode(parameterTypes, `0x${tx.data.slice(10)}`);
+
+  insights.parameters = decodedParameters.map(normalizeAbiValue);
+
+  const checksumAddress = await getChecksumAddress(tx.to);
+  let verified = VerifiedStatus.NO_MATCH;
+  try {
+    const res = await fetch(
+      `https://repo.sourcify.dev/contracts/full_match/${chainId}/${checksumAddress}/metadata.json`,
+    );
+    if (res) {
+      verified = VerifiedStatus.FULL_MATCH;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+  if (verified === VerifiedStatus.NO_MATCH) {
+    try {
+      const res = await fetch(
+        `https://repo.sourcify.dev/contracts/partial_match/${chainId}/${checksumAddress}/metadata.json`,
+      );
+      if (res) {
+        verified = VerifiedStatus.PARTIAL_MATCH;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  if (verified === VerifiedStatus.NO_MATCH) {
+    insights.verified = '🔴 No Match';
+  } else if (verified === VerifiedStatus.PARTIAL_MATCH) {
+    insights.verified = '🟡 Partial Match';
+  } else if (verified === VerifiedStatus.FULL_MATCH) {
+    insights.verified = '🟢 Full Match';
+  }
 
   return { insights };
 };
-
-/**
- * The ABI decoder returns certain which are not JSON serializable. This
- * function converts them to strings.
- *
- * @param value - The value to convert.
- * @returns The converted value.
- */
- function normalizeAbiValue(value: unknown): Json {
-  if (Array.isArray(value)) {
-    return value.map(normalizeAbiValue);
-  }
-
-  if (value instanceof Uint8Array) {
-    return bytesToHex(value);
-  }
-
-  if (typeof value === 'bigint') {
-    return value.toString();
-  }
-
-  return value as Json;
-}

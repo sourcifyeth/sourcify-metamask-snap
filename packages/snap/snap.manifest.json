@@ -1,13 +1,13 @@
 {
   "version": "0.1.0",
-  "description": "An example Snap written in TypeScript.",
-  "proposedName": "TypeScript Example Snap",
+  "description": "Human readable transaction",
+  "proposedName": "Sourcify",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "https://github.com/sourcifyeth/.git"
   },
   "source": {
-    "shasum": "tFpRutddXeFQuJV7vgtcG5Lpawz8FY2G2pNCxviCzh8=",
+    "shasum": "xW24e40vOrrieudL29tLJd43vLBkTiFzpZ2WZxBnsGA=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

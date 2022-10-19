@@ -1,3 +1,4 @@
+import { ethers } from 'ethers';
 import { useContext } from 'react';
 import styled from 'styled-components';
 import { MetamaskActions, MetaMaskContext } from '../hooks';
@@ -99,14 +100,14 @@ const ErrorMessage = styled.div`
   }
 `;
 
-enum TransactionConstants {
+/* enum TransactionConstants {
   // The address of an arbitrary contract that will reject any transactions it receives
   Address = '0x08A8fDBddc160A7d5b957256b903dCAb1aE512C5',
   // Some example encoded contract transaction data
   UpdateWithdrawalAccount = '0x83ade3dc00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000200000000000000000000000047170ceae335a9db7e96b72de630389669b334710000000000000000000000006b175474e89094c44da98b954eedeac495271d0f',
   UpdateMigrationMode = '0x2e26065e0000000000000000000000000000000000000000000000000000000000000000',
   UpdateCap = '0x85b2c14a00000000000000000000000047170ceae335a9db7e96b72de630389669b334710000000000000000000000000000000000000000000000000de0b6b3a7640000',
-}
+} */
 
 export const Home = () => {
   const [state, dispatch] = useContext(MetaMaskContext);
@@ -128,21 +129,43 @@ export const Home = () => {
 
   const handleSendHelloClick = async () => {
     try {
-      const accounts = (await window.ethereum.request({
+      const { ethereum } = window as any;
+      const accounts = await ethereum.request({
         method: 'eth_requestAccounts',
-      })) as string[];
-
-      await window.ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [
-          {
-            from: accounts[0],
-            to: TransactionConstants.Address,
-            value: '0x0',
-            data: TransactionConstants.UpdateWithdrawalAccount,
-          },
-        ],
       });
+
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const walletAddress = accounts[0]; // first account in MetaMask
+      const signer = provider.getSigner(walletAddress);
+
+      const abi = [
+        {
+          inputs: [
+            {
+              internalType: 'uint256',
+              name: '_n2',
+              type: 'uint256',
+            },
+          ],
+          name: 'multiplyBy',
+          outputs: [
+            {
+              internalType: 'uint256',
+              name: '',
+              type: 'uint256',
+            },
+          ],
+          stateMutability: 'nonpayable',
+          type: 'function',
+        },
+      ];
+      const USDTContract = new ethers.Contract(
+        '0xD4B081C226Bc8aBdaf111DEf54c09E779ad29428',
+        abi,
+        signer,
+      );
+
+      await USDTContract.multiplyBy(3);
     } catch (e) {
       console.error(e);
       dispatch({ type: MetamaskActions.SetError, payload: e });
