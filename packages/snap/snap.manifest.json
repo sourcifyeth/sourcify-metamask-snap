@@ -4,7 +4,7 @@
   "proposedName": "Sourcify",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sourcifyeth/.git"
+    "url": "https://github.com/sourcifyeth/sourcify-metamask-snap.git"
   },
   "source": {
     "shasum": "xW24e40vOrrieudL29tLJd43vLBkTiFzpZ2WZxBnsGA=",
@@ -12,7 +12,7 @@
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/icon.svg",
-        "packageName": "snap",
+        "packageName": "sourcify-metamask-snap",
         "registry": "https://registry.npmjs.org/"
       }
     }
