@@ -2778,6 +2778,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@marcocastignoli/bytecode-utils@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@marcocastignoli/bytecode-utils@npm:1.0.2"
+  dependencies:
+    "@ethersproject/bytes": ^5.7.0
+    "@types/node": ^18.11.4
+    bs58: ^5.0.0
+    cbor-x: ^1.4.1
+  checksum: 339abb9c229bd9467100f9f090254cff4a82d6f22e98ec27783f250397590277cbd3dd8f65b1ba466d8b781fa839fa5f999ac0427832ad95327fa4b5c5485650
+  languageName: node
+  linkType: hard
+
 "@metamask/abi-utils@npm:^1.1.0":
   version: 1.1.0
   resolution: "@metamask/abi-utils@npm:1.1.0"
@@ -3796,6 +3808,13 @@ __metadata:
   version: 12.20.55
   resolution: "@types/node@npm:12.20.55"
   checksum: e4f86785f4092706e0d3b0edff8dca5a13b45627e4b36700acd8dfe6ad53db71928c8dee914d4276c7fd3b6ccd829aa919811c9eb708a2c8e4c6eb3701178c37
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.11.4":
+  version: 18.11.4
+  resolution: "@types/node@npm:18.11.4"
+  checksum: 1de782b4eef4a5115396ae62137f248390ee5d1d9e9eeb49599714554cce1328af43da31bc28e7bab5a0ef859538a584a907b26163a59b42bc87b8317dc00bb8
   languageName: node
   linkType: hard
 
@@ -14920,6 +14939,7 @@ __metadata:
   resolution: "sourcify-metamask-snap@workspace:packages/snap"
   dependencies:
     "@lavamoat/allow-scripts": ^2.0.3
+    "@marcocastignoli/bytecode-utils": ^1.0.2
     "@metamask/abi-utils": ^1.1.0
     "@metamask/auto-changelog": ^2.6.0
     "@metamask/eslint-config": ^10.0.0
@@ -14931,8 +14951,6 @@ __metadata:
     "@metamask/utils": ^3.2.0
     "@typescript-eslint/eslint-plugin": ^5.33.0
     "@typescript-eslint/parser": ^5.33.0
-    bs58: ^5.0.0
-    cbor-x: ^1.4.1
     eslint: ^8.21.0
     eslint-config-prettier: ^8.1.0
     eslint-plugin-import: ^2.26.0

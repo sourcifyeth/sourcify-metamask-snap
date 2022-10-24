@@ -27,10 +27,9 @@
     "start": "mm-snap watch"
   },
   "dependencies": {
+    "@marcocastignoli/bytecode-utils": "^1.0.2",
     "@metamask/abi-utils": "^1.1.0",
     "@metamask/utils": "^3.2.0",
-    "bs58": "^5.0.0",
-    "cbor-x": "^1.4.1",
     "ethers": "^5.7.1",
     "radspec": "^1.12.1",
     "sha3": "^2.1.4"

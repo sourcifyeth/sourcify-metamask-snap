@@ -7,7 +7,7 @@
     "url": "https://github.com/sourcifyeth/sourcify-metamask-snap.git"
   },
   "source": {
-    "shasum": "I5cC+0E1gYX+w+OH4HXWzvtTa7AgvkteUG+LpDQ4adU=",
+    "shasum": "AXNhf1UPe99UTVpP1ovXVByhwwRYf293Qjr9UhRU3/A=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
