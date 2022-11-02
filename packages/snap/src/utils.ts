@@ -14,12 +14,6 @@ export const arrayify = (hex: string): number[] => {
   return result;
 };
 
-export type Insights = {
-  notice: string;
-  parameters: any[];
-  verified: string;
-};
-
 export type Transaction = {
   data: string;
   to: string;

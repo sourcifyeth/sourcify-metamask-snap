@@ -1,35 +1,29 @@
-import { OnTransactionHandler } from '@metamask/snap-types';
-import { Insights, Transaction } from './utils';
-import { metadataDecoder } from './decoders/metadata';
-import { selectorDecoder } from './decoders/selector';
-import { noticeDecoder } from './decoders/notice';
-import { parametersDecoder } from './decoders/parameters';
+import {
+  OnTransactionHandler,
+  OnTransactionResponse,
+} from '@metamask/snap-types';
+import { Transaction } from './utils';
+import { contractCallDecoder } from './decoders/contract-call-decoder';
 import { VerifiedStatus, verificationDecoder } from './decoders/verification';
 
 /* eslint-enable camelcase */
 export const onTransaction: OnTransactionHandler = async ({ transaction }) => {
-  const insights: Insights = {
-    verified: '',
-    notice: '',
-    parameters: [],
+  const result: OnTransactionResponse = {
+    insights: {},
   };
   const tx = transaction as Transaction;
 
-  const metadata = await metadataDecoder(tx);
-  const selector = await selectorDecoder(tx, metadata);
-  const notice = await noticeDecoder(tx, metadata, selector);
-  const parameters = await parametersDecoder(tx, selector);
+  const notice = await contractCallDecoder(tx);
   const verified = await verificationDecoder(tx);
 
-  insights.notice = notice;
-  insights.parameters = parameters;
+  result.insights.notice = notice;
   if (verified === VerifiedStatus.NO_MATCH) {
-    insights.verified = 'Sourcify 🔴 No Match';
+    result.insights.verified = 'Sourcify 🔴 No Match';
   } else if (verified === VerifiedStatus.PARTIAL_MATCH) {
-    insights.verified = 'Sourcify 🟡 Partial Match';
+    result.insights.verified = 'Sourcify 🟡 Partial Match';
   } else if (verified === VerifiedStatus.FULL_MATCH) {
-    insights.verified = 'Sourcify 🟢 Full Match';
+    result.insights.verified = 'Sourcify 🟢 Full Match';
   }
 
-  return { insights };
+  return result;
 };

@@ -1837,6 +1837,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@blossom-labs/rosette-radspec@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@blossom-labs/rosette-radspec@npm:0.2.1"
+  dependencies:
+    date-fns: ^2.26.0
+  peerDependencies:
+    ethers: ^5.6.4
+  checksum: cf3082e7d4c8f6e66a2941b02e233da4a75477f1fd3bbf227d215ad28f9d4b4d3eb756011223ab2b728107f640880d25e758402662ad9f8a1b6bbe668dfece75
+  languageName: node
+  linkType: hard
+
 "@cbor-extract/cbor-extract-darwin-arm64@npm:2.0.0":
   version: 2.0.0
   resolution: "@cbor-extract/cbor-extract-darwin-arm64@npm:2.0.0"
@@ -2307,6 +2318,34 @@ __metadata:
     bech32: 1.1.4
     ws: 7.4.6
   checksum: 673745e967e7215b46b7d3024f5ee02be975d6cf66b605f87a0e5beaa349d6d30c987165f98eceddaf7996f64a1ec414f0715f25fc3458aead6eea4c4820c399
+  languageName: node
+  linkType: hard
+
+"@ethersproject/providers@npm:5.7.2":
+  version: 5.7.2
+  resolution: "@ethersproject/providers@npm:5.7.2"
+  dependencies:
+    "@ethersproject/abstract-provider": ^5.7.0
+    "@ethersproject/abstract-signer": ^5.7.0
+    "@ethersproject/address": ^5.7.0
+    "@ethersproject/base64": ^5.7.0
+    "@ethersproject/basex": ^5.7.0
+    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/bytes": ^5.7.0
+    "@ethersproject/constants": ^5.7.0
+    "@ethersproject/hash": ^5.7.0
+    "@ethersproject/logger": ^5.7.0
+    "@ethersproject/networks": ^5.7.0
+    "@ethersproject/properties": ^5.7.0
+    "@ethersproject/random": ^5.7.0
+    "@ethersproject/rlp": ^5.7.0
+    "@ethersproject/sha2": ^5.7.0
+    "@ethersproject/strings": ^5.7.0
+    "@ethersproject/transactions": ^5.7.0
+    "@ethersproject/web": ^5.7.0
+    bech32: 1.1.4
+    ws: 7.4.6
+  checksum: 1754c731a5ca6782ae9677f4a9cd8b6246c4ef21a966c9a01b133750f3c578431ec43ec254e699969c4a0f87e84463ded50f96b415600aabd37d2056aee58c19
   languageName: node
   linkType: hard
 
@@ -2812,6 +2851,19 @@ __metadata:
     bs58: ^5.0.0
     cbor-x: ^1.4.1
   checksum: 339abb9c229bd9467100f9f090254cff4a82d6f22e98ec27783f250397590277cbd3dd8f65b1ba466d8b781fa839fa5f999ac0427832ad95327fa4b5c5485650
+  languageName: node
+  linkType: hard
+
+"@marcocastignoli/bytecode-utils@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "@marcocastignoli/bytecode-utils@npm:1.0.4"
+  dependencies:
+    "@ethersproject/bytes": ^5.7.0
+    "@types/node": ^18.11.4
+    bs58: ^5.0.0
+    cbor-x: ^1.4.1
+    ethereum-provider: ^0.7.7
+  checksum: c61be2c027093aa9a4a0891f873f1acf4f8b2e48b6eaae3cf0e7e725c32733a7fd11094ee7c105534e1c9d1c92b5e62ef96e45481703cab45e93b15ef29d6de0
   languageName: node
   linkType: hard
 
@@ -6415,6 +6467,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"contract-call-decoder@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "contract-call-decoder@npm:1.0.4"
+  dependencies:
+    "@blossom-labs/rosette-radspec": ^0.2.1
+    "@ethersproject/abi": ^5.7.0
+    "@marcocastignoli/bytecode-utils": ^1.0.4
+    ethereum-provider: ^0.7.7
+    ethers: ^5.7.2
+    isomorphic-fetch: ^3.0.0
+  checksum: 86bcf7edc8df7f369999a743851c84b80725280849f45ab2547524de1cdff62f24014486c353477640a10c08760d8c0c79b09b390bffbcf4072ca641ba29effc
+  languageName: node
+  linkType: hard
+
 "convert-source-map@npm:^1.4.0, convert-source-map@npm:^1.6.0, convert-source-map@npm:^1.7.0, convert-source-map@npm:^1.8.0":
   version: 1.8.0
   resolution: "convert-source-map@npm:1.8.0"
@@ -6956,6 +7022,13 @@ __metadata:
   version: 2.0.0-alpha.22
   resolution: "date-fns@npm:2.0.0-alpha.22"
   checksum: 95b834cfa375fb918dad6dc4681055890c4a95e1e8bc35aa32ab4c3ade9afce047d429e36f148c3f5e27b1e3ff40221612ee9c3ab92f6c22a612e7494c9c6313
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^2.26.0":
+  version: 2.29.3
+  resolution: "date-fns@npm:2.29.3"
+  checksum: e01cf5b62af04e05dfff921bb9c9933310ed0e1ae9a81eb8653452e64dc841acf7f6e01e1a5ae5644d0337e9a7f936175fd2cb6819dc122fdd9c5e86c56be484
   languageName: node
   linkType: hard
 
@@ -8275,6 +8348,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ethereum-provider@npm:^0.7.7":
+  version: 0.7.7
+  resolution: "ethereum-provider@npm:0.7.7"
+  dependencies:
+    events: 3.3.0
+  checksum: d6afbed7aa2d6629f9a006e79bf778c7155704b2bf1c3af4da7438c1e1d3c160bce9cb30745b6396dd22538a95b84a3dc6b82268d83413c49b5d02d89b9ff156
+  languageName: node
+  linkType: hard
+
 "ethereumjs-util@npm:^7.0.10, ethereumjs-util@npm:^7.1.0, ethereumjs-util@npm:^7.1.5":
   version: 7.1.5
   resolution: "ethereumjs-util@npm:7.1.5"
@@ -8326,6 +8408,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ethers@npm:^5.7.2":
+  version: 5.7.2
+  resolution: "ethers@npm:5.7.2"
+  dependencies:
+    "@ethersproject/abi": 5.7.0
+    "@ethersproject/abstract-provider": 5.7.0
+    "@ethersproject/abstract-signer": 5.7.0
+    "@ethersproject/address": 5.7.0
+    "@ethersproject/base64": 5.7.0
+    "@ethersproject/basex": 5.7.0
+    "@ethersproject/bignumber": 5.7.0
+    "@ethersproject/bytes": 5.7.0
+    "@ethersproject/constants": 5.7.0
+    "@ethersproject/contracts": 5.7.0
+    "@ethersproject/hash": 5.7.0
+    "@ethersproject/hdnode": 5.7.0
+    "@ethersproject/json-wallets": 5.7.0
+    "@ethersproject/keccak256": 5.7.0
+    "@ethersproject/logger": 5.7.0
+    "@ethersproject/networks": 5.7.1
+    "@ethersproject/pbkdf2": 5.7.0
+    "@ethersproject/properties": 5.7.0
+    "@ethersproject/providers": 5.7.2
+    "@ethersproject/random": 5.7.0
+    "@ethersproject/rlp": 5.7.0
+    "@ethersproject/sha2": 5.7.0
+    "@ethersproject/signing-key": 5.7.0
+    "@ethersproject/solidity": 5.7.0
+    "@ethersproject/strings": 5.7.0
+    "@ethersproject/transactions": 5.7.0
+    "@ethersproject/units": 5.7.0
+    "@ethersproject/wallet": 5.7.0
+    "@ethersproject/web": 5.7.1
+    "@ethersproject/wordlists": 5.7.0
+  checksum: b7c08cf3e257185a7946117dbbf764433b7ba0e77c27298dec6088b3bc871aff711462b0621930c56880ff0a7ceb8b1d3a361ffa259f93377b48e34107f62553
+  languageName: node
+  linkType: hard
+
 "ethjs-unit@npm:0.1.6":
   version: 0.1.6
   resolution: "ethjs-unit@npm:0.1.6"
@@ -8350,7 +8470,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"events@npm:^3.0.0, events@npm:^3.2.0":
+"events@npm:3.3.0, events@npm:^3.0.0, events@npm:^3.2.0":
   version: 3.3.0
   resolution: "events@npm:3.3.0"
   checksum: f6f487ad2198aa41d878fa31452f1a3c00958f46e9019286ff4787c84aac329332ab45c9cdc8c445928fc6d7ded294b9e005a7fce9426488518017831b272780
@@ -10097,6 +10217,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"isomorphic-fetch@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "isomorphic-fetch@npm:3.0.0"
+  dependencies:
+    node-fetch: ^2.6.1
+    whatwg-fetch: ^3.4.1
+  checksum: e5ab79a56ce5af6ddd21265f59312ad9a4bc5a72cebc98b54797b42cb30441d5c5f8d17c5cd84a99e18101c8af6f90c081ecb8d12fd79e332be1778d58486d75
+  languageName: node
+  linkType: hard
+
 "isstream@npm:~0.1.2":
   version: 0.1.2
   resolution: "isstream@npm:0.1.2"
@@ -11778,7 +11908,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.6.7":
+"node-fetch@npm:2.6.7, node-fetch@npm:^2.6.1":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
   dependencies:
@@ -14993,6 +15123,7 @@ __metadata:
     "@metamask/utils": ^3.2.0
     "@typescript-eslint/eslint-plugin": ^5.33.0
     "@typescript-eslint/parser": ^5.33.0
+    contract-call-decoder: ^1.0.4
     eslint: ^8.21.0
     eslint-config-prettier: ^8.1.0
     eslint-plugin-import: ^2.26.0
@@ -16834,7 +16965,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"whatwg-fetch@npm:^3.6.2":
+"whatwg-fetch@npm:^3.4.1, whatwg-fetch@npm:^3.6.2":
   version: 3.6.2
   resolution: "whatwg-fetch@npm:3.6.2"
   checksum: ee976b7249e7791edb0d0a62cd806b29006ad7ec3a3d89145921ad8c00a3a67e4be8f3fb3ec6bc7b58498724fd568d11aeeeea1f7827e7e1e5eae6c8a275afed
