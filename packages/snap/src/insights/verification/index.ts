@@ -23,35 +23,44 @@ export enum VerifiedStatus {
   FULL_MATCH,
 }
 
-export const verificationDecoder = async (
-  tx: Transaction,
+export const getVerificationInsight = async (
+  transaction: Transaction,
 ): Promise<any | null> => {
   const chainId = wallet.networkVersion;
-  const checksumAddress = await getChecksumAddress(tx.to);
-  let verified = VerifiedStatus.NO_MATCH;
+  const checksumAddress = await getChecksumAddress(transaction.to);
+  let verificationStatus = VerifiedStatus.NO_MATCH;
   try {
     const res = await fetch(
       `https://repo.sourcify.dev/contracts/full_match/${chainId}/${checksumAddress}/metadata.json`,
     );
     if (res) {
-      verified = VerifiedStatus.FULL_MATCH;
+      verificationStatus = VerifiedStatus.FULL_MATCH;
     }
   } catch (e) {
     console.log(e);
   }
 
-  if (verified === VerifiedStatus.NO_MATCH) {
+  if (verificationStatus === VerifiedStatus.NO_MATCH) {
     try {
       const res = await fetch(
         `https://repo.sourcify.dev/contracts/partial_match/${chainId}/${checksumAddress}/metadata.json`,
       );
       if (res) {
-        verified = VerifiedStatus.PARTIAL_MATCH;
+        verificationStatus = VerifiedStatus.PARTIAL_MATCH;
       }
     } catch (e) {
       console.log(e);
     }
   }
 
-  return verified;
+  let verified = '';
+  if (verificationStatus === VerifiedStatus.NO_MATCH) {
+    verified = 'Sourcify 🔴 No Match';
+  } else if (verificationStatus === VerifiedStatus.PARTIAL_MATCH) {
+    verified = 'Sourcify 🟡 Partial Match';
+  } else if (verificationStatus === VerifiedStatus.FULL_MATCH) {
+    verified = 'Sourcify 🟢 Full Match';
+  }
+
+  return { verified };
 };
