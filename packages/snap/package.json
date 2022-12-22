@@ -27,10 +27,10 @@
     "start": "mm-snap watch"
   },
   "dependencies": {
+    "@ethereum-sourcify/contract-call-decoder": "^0.2.1",
     "@marcocastignoli/bytecode-utils": "^1.0.2",
     "@metamask/abi-utils": "^1.1.0",
-    "@metamask/utils": "^3.2.0",
-    "contract-call-decoder": "^1.0.4",
+    "@metamask/utils": "^3.3.1",
     "ethers": "^5.7.1",
     "radspec": "^1.12.1",
     "sha3": "^2.1.4"

@@ -7,7 +7,7 @@
     "url": "https://github.com/sourcifyeth/sourcify-metamask-snap.git"
   },
   "source": {
-    "shasum": "Kd1ZKhvCs5gYXW/pLlU7vQVc98ToBlZvl3W66rHmHw4=",
+    "shasum": "4gm9bBTOA0FneKQSDNgVwIN2XrIL2bx/x1v6MOMWtf0=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -19,7 +19,8 @@
   },
   "initialPermissions": {
     "endowment:transaction-insight": {},
-    "endowment:network-access": {}
+    "endowment:network-access": {},
+    "endowment:long-running": {}
   },
   "manifestVersion": "0.1"
 }
