@@ -1,5 +1,6 @@
 /* eslint-disable no-bitwise */
-import { arrayify, kekkak256, Transaction } from '../../utils';
+import { ethers } from 'ethers';
+import { Transaction } from '../../utils';
 
 enum VerificationInsight {
   FULL_MATCH = 'Sourcify 🟢 Full Match',
