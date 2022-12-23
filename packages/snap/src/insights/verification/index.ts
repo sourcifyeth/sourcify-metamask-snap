@@ -24,17 +24,15 @@ export const getVerificationInsight = async (
     console.log(e);
   }
 
-  if (verificationStatus === VerifiedStatus.NO_MATCH) {
-    try {
-      const res = await fetch(
-        `https://repo.sourcify.dev/contracts/partial_match/${chainId}/${checksumAddress}/metadata.json`,
-      );
-      if (res) {
+  try {
+    const res = await fetch(
+      `https://repo.sourcify.dev/contracts/partial_match/${chainId}/${checksumAddress}/metadata.json`,
+    );
+    if (res) {
       return { verified: VerificationInsight.PARTIAL_MATCH };
-      }
-    } catch (e) {
-      console.log(e);
     }
+  } catch (e) {
+    console.log(e);
   }
 
   return { verified: VerificationInsight.NO_MATCH };
