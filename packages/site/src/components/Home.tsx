@@ -134,6 +134,18 @@ export const Home = () => {
         method: 'eth_requestAccounts',
       });
 
+      // Switch Network to Goerli so that user can see the output for below transaction.
+      const networkVersion = await window.ethereum.request({
+        method: 'net_version',
+      });
+
+      if (networkVersion !== '5') {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x5' }],
+        });
+      }
+
       const provider = new ethers.providers.Web3Provider(ethereum);
       const walletAddress = accounts[0]; // first account in MetaMask
       const signer = provider.getSigner(walletAddress);
